@@ -2,6 +2,10 @@
 
 A systematic Auto Run playbook for finding and fixing performance issues in your codebase.
 
+## Requirements
+
+**Agent Prompt**: This playbook works with Maestro's **default agent prompt**. No custom agent configuration required.
+
 ## Overview
 
 This playbook creates an automated pipeline that:
