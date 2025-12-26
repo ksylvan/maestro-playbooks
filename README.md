@@ -29,6 +29,43 @@ Knowledge-building workflows that require **custom agent prompts** with user con
 |----------|---------|----------------|
 | `Research/Market/` | Build Obsidian-style knowledge vault about a market | Coverage targets met or no HIGH importance entities remain |
 
+## Design Philosophy: Context Engineering
+
+**Playbook design is context engineering.** Each document is a prompt engineered to provide exactly the right information at the right time.
+
+### Progressive Disclosure
+
+The core principle: **reveal information incrementally, not all at once.**
+
+AI agents perform best with focused, relevant context—not information overload. Playbooks achieve this through staged discovery, where each document produces artifacts that carry forward only what's relevant to the next stage.
+
+### Front-Load the Hard Work
+
+The expensive token-consuming work happens **upfront** in the early documents. These produce detailed, well-separated task documents that later stages execute cheaply.
+
+```
+Phase 1: Discovery & Planning (token-heavy)
+├── Documents 1-3: Explore, investigate, evaluate
+└── Output: LOOP_N_PLAN.md with detailed implementation steps
+
+Phase 2: Execution (token-light)
+├── Document 4: Execute ONE item from the plan
+└── Document 5: Check progress, loop if needed
+        ↓
+    (loop back to Phase 1 if work remains)
+```
+
+**Each loop iteration is self-contained:** discover → plan → execute → check. When looping, Phase 1 re-surveys the (now changed) codebase and produces a fresh plan. Failed items don't pollute the next iteration.
+
+### Why This Matters
+
+- **Focused attention** beats scattered attention
+- **Curated context** produces better decisions than raw dumps
+- **Less context** = faster execution, lower costs, better reasoning
+- **Detailed task artifacts** enable cheap execution—agents read pre-computed context instead of re-exploring
+
+When creating playbooks, design each document to answer: *"What is the minimum context this agent needs to complete this specific task?"*
+
 ## Playbook Architecture
 
 Each playbook follows a 5-document chain pattern (with optional initialization):
