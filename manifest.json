@@ -1,0 +1,160 @@
+{
+  "lastUpdated": "2025-12-26",
+  "playbooks": [
+    {
+      "id": "development-security",
+      "title": "Security Audit",
+      "description": "Comprehensive security analysis identifying vulnerabilities, outdated dependencies, and OWASP top 10 issues. Automatically remediates CRITICAL and HIGH severity issues.",
+      "category": "Development",
+      "subcategory": "Security",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["security", "audit", "owasp", "vulnerabilities", "dependencies"],
+      "lastUpdated": "2025-12-26",
+      "path": "Development/Security",
+      "documents": [
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_FIND_ISSUES", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_IMPLEMENT", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": 5,
+      "prompt": null
+    },
+    {
+      "id": "development-performance",
+      "title": "Performance Optimization",
+      "description": "Systematic performance analysis finding bottlenecks, inefficient patterns, and optimization opportunities. Implements high-gain, low-complexity fixes automatically.",
+      "category": "Development",
+      "subcategory": "Performance",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["performance", "optimization", "bottlenecks", "efficiency"],
+      "lastUpdated": "2025-12-26",
+      "path": "Development/Performance",
+      "documents": [
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_FIND_ISSUES", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_IMPLEMENT", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": null,
+      "prompt": null
+    },
+    {
+      "id": "development-refactor",
+      "title": "Code Refactoring",
+      "description": "Systematic code improvement targeting duplication, complexity, and large files. Implements safe, high-value refactors with LOW risk and HIGH benefit.",
+      "category": "Development",
+      "subcategory": "Refactor",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["refactoring", "code-quality", "duplication", "complexity", "maintainability"],
+      "lastUpdated": "2025-12-26",
+      "path": "Development/Refactor",
+      "documents": [
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_FIND_ISSUES", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_IMPLEMENT", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": null,
+      "prompt": null
+    },
+    {
+      "id": "development-documentation",
+      "title": "Documentation Coverage",
+      "description": "Systematic documentation generation targeting 90% coverage. Documents exported functions, classes, types, and modules with consistent quality standards.",
+      "category": "Development",
+      "subcategory": "Documentation",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["documentation", "coverage", "jsdoc", "comments", "api-docs"],
+      "lastUpdated": "2025-12-26",
+      "path": "Development/Documentation",
+      "documents": [
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_FIND_GAPS", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_IMPLEMENT", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": 10,
+      "prompt": null
+    },
+    {
+      "id": "development-testing",
+      "title": "Test Coverage",
+      "description": "Systematic test generation targeting 80% line coverage. Creates unit tests, integration tests, and edge case coverage for critical code paths.",
+      "category": "Development",
+      "subcategory": "Testing",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["testing", "coverage", "unit-tests", "integration-tests", "quality"],
+      "lastUpdated": "2025-12-26",
+      "path": "Development/Testing",
+      "documents": [
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_FIND_GAPS", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_IMPLEMENT", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": 10,
+      "prompt": null
+    },
+    {
+      "id": "development-usage",
+      "title": "README Accuracy",
+      "description": "Audits and updates project README to match actual codebase features. Finds missing documentation, stale references, and inaccuracies.",
+      "category": "Development",
+      "subcategory": "Usage",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["readme", "documentation", "accuracy", "features", "usage"],
+      "lastUpdated": "2025-12-26",
+      "path": "Development/Usage",
+      "documents": [
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_FIND_GAPS", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_IMPLEMENT", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": 5,
+      "prompt": null
+    },
+    {
+      "id": "research-market",
+      "title": "Market Research",
+      "description": "Builds comprehensive Obsidian-style knowledge vaults about specific markets using web research. Creates interlinked profiles of companies, products, people, technologies, and trends.",
+      "category": "Research",
+      "subcategory": "Market",
+      "author": "Pedram Amini",
+      "authorLink": "https://www.pedramamini.com",
+      "tags": ["market-research", "knowledge-vault", "obsidian", "companies", "trends", "web-research"],
+      "lastUpdated": "2025-12-26",
+      "path": "Research/Market",
+      "documents": [
+        { "filename": "0_INITIALIZE", "resetOnCompletion": false },
+        { "filename": "1_ANALYZE", "resetOnCompletion": false },
+        { "filename": "2_DISCOVER", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE", "resetOnCompletion": false },
+        { "filename": "4_RESEARCH", "resetOnCompletion": false },
+        { "filename": "5_PROGRESS", "resetOnCompletion": true }
+      ],
+      "loopEnabled": true,
+      "maxLoops": 30,
+      "prompt": "# Market Research Agent Prompt\n\n**IMPORTANT: Configure the placeholders below before running this playbook.**\n\n---\n\n## Research Configuration\n\n### Target Market\n<!-- CONFIGURE: Replace the example below with your target market -->\n**MARKET_TOPIC:** `Electric Vehicle Charging Infrastructure`\n\n<!-- Examples of market topics:\n- \"AI-Powered Developer Tools\"\n- \"Plant-Based Meat Alternatives\"\n- \"Enterprise Kubernetes Platforms\"\n- \"Direct-to-Consumer Hearing Aids\"\n- \"Carbon Capture Technologies\"\n-->\n\n### Output Location\n<!-- CONFIGURE: Replace with your desired output folder path -->\n**OUTPUT_FOLDER:** `{{AUTORUN_FOLDER}}/vault`\n\n<!-- This is where all research markdown files will be created -->\n\n---\n\n## Agent Instructions\n\nYou are a market research agent building a comprehensive knowledge vault about the configured market topic. Your goal is to create an interconnected set of markdown documents that provide deep insight into the market landscape.\n\n### Your Capabilities\n- **Web Search**: Use web search extensively to gather current market information\n- **Structured Research**: Follow templates to ensure consistent, comparable entity profiles\n- **Knowledge Linking**: Create `[[wiki-style]]` links between related entities\n- **Incremental Building**: Each loop iteration adds one well-researched entity to the vault\n\n### Entity Types to Research\nDepending on the market, research these entity categories:\n- **Companies**: Key players, startups, incumbents in the space\n- **Products/Services**: Notable offerings in the market\n- **People**: Founders, executives, thought leaders, analysts\n- **Technologies**: Core technologies, platforms, standards\n- **Trends**: Market trends, growth drivers, disruptions\n- **Investors**: VCs, corporate investors active in the space\n- **Regulations**: Relevant laws, standards, compliance requirements\n- **Events**: Conferences, trade shows, industry gatherings\n\n### Output Standards\n- All files in markdown format\n- Use `[[Entity Name]]` syntax for inter-page links\n- Include sources with URLs for all factual claims\n- Create an INDEX.md as the central launch page\n- Organize files in subfolders by entity type\n\n### Research Quality\n- Prioritize recent information (last 2 years)\n- Cross-reference multiple sources\n- Note when information is uncertain or conflicting\n- Include both qualitative insights and quantitative data where available\n\n---\n\n## Specialized Agents\n\nAfter initialization (`0_INITIALIZE.md`), the vault will contain specialized agents in the `Agents/` folder (also accessible via `.claude/agents`):\n\n| Agent | Purpose |\n|-------|--------|\n| `company-researcher` | Research and create company profiles |\n| `product-researcher` | Research and create product/service profiles |\n| `person-researcher` | Research and create key people profiles |\n| `technology-researcher` | Research and create technology profiles |\n| `trend-researcher` | Research and analyze market trends |\n\n### Using Agents\n\nYou can spawn these agents using the Task tool to research specific entities:\n\n```\nTask: \"Research Acme Corp for the knowledge vault\"\nAgent: company-researcher\n```\n\nEach agent will:\n1. Use web search to gather information\n2. Create a structured markdown profile\n3. Add `[[wiki-links]]` to related entities\n4. Update INDEX.md with the new entry\n\n---\n\n## Slash Commands\n\nAfter initialization, the vault will contain commands in the `Commands/` folder (also accessible via `.claude/commands`):\n\n| Command | Purpose |\n|---------|--------|\n| `/research` | Research a specific entity and add to vault |\n\n---\n\n## Working Style\n\n- **Keep going until done** - Complete research tasks without unnecessary pauses\n- **Use agents for entity research** - Spawn specialized agents for each entity type\n- **Maintain connections** - Always add `[[wiki-links]]` between related entities\n- **Update INDEX.md** - Keep the launch page current with all researched entities\n"
+    }
+  ]
+}
