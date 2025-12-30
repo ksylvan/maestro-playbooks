@@ -24,7 +24,7 @@ Research ONE entity from the plan and create a comprehensive markdown profile in
 
 ## Research Checklist
 
-- [ ] **Research one entity**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md` and pick ONE PENDING entity with CRITICAL or HIGH importance. Use web search to gather comprehensive information. Create the entity profile in the vault following the template from the market analysis. Add `[[wiki-style]]` links to related entities. Update INDEX.md. Mark as RESEARCHED in the plan. Log to `{{AUTORUN_FOLDER}}/RESEARCH_LOG_{{AGENT_NAME}}_{{DATE}}.md`.
+- [ ] **Research one entity (or skip if none)**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`. If the file doesn't exist OR contains no PENDING entities with CRITICAL or HIGH importance, mark this task complete without changes. Otherwise, pick ONE PENDING entity with CRITICAL or HIGH importance. Use web search to gather comprehensive information. Create the entity profile in the vault following the template from the market analysis. Add `[[wiki-style]]` links to related entities. Update INDEX.md. Mark as RESEARCHED in the plan. Log to `{{AUTORUN_FOLDER}}/RESEARCH_LOG_{{AGENT_NAME}}_{{DATE}}.md`.
 
 ## Research Process
 
@@ -251,3 +251,21 @@ Append to `{{AUTORUN_FOLDER}}/RESEARCH_LOG_{{AGENT_NAME}}_{{DATE}}.md`:
 - **Update INDEX.md** - Keep the launch page current
 - **Note gaps** - Document what you couldn't find
 - **Stay current** - Prioritize recent information
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Researched an entity:**
+1. You've researched exactly ONE entity from `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`
+2. You've created the entity profile in the vault
+3. You've updated INDEX.md with a link to the new entity
+4. You've appended the research details to `{{AUTORUN_FOLDER}}/RESEARCH_LOG_{{AGENT_NAME}}_{{DATE}}.md`
+5. You've updated the entity status in `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md` to `RESEARCHED`
+
+**Option B - No PENDING entities available:**
+1. `LOOP_{{LOOP_NUMBER}}_PLAN.md` doesn't exist, OR
+2. It contains no entities with status PENDING and importance CRITICAL or HIGH
+3. Mark this task complete without making changes
+
+This graceful handling allows the pipeline to continue when a loop iteration produces no entities requiring research.
