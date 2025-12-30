@@ -20,7 +20,7 @@ Evaluate discovered entities and prioritize them for research. Assess each entit
 
 ## Evaluation Checklist
 
-- [ ] **Evaluate one entity**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ENTITIES.md` to find PENDING entities. Pick ONE that hasn't been evaluated yet. Assess its importance and research effort. Append evaluation to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md` with appropriate status.
+- [ ] **Evaluate one entity (or skip if empty)**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ENTITIES.md` to find PENDING entities. If the file contains no entities OR all entities have already been evaluated in `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`, mark this task complete without changes. Otherwise, pick ONE entity that hasn't been evaluated yet. Assess its importance and research effort. Append evaluation to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md` with appropriate status.
 
 ## Importance Criteria
 
@@ -117,3 +117,20 @@ Entities this will likely link to:
 - **Consider the portfolio** - Balance entity types for comprehensive coverage
 - **Note key questions** - Guides the research phase
 - **Identify sources upfront** - Saves time during research
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Evaluated an entity:**
+1. You've evaluated exactly ONE entity from `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ENTITIES.md`
+2. You've appended a complete evaluation to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`
+3. The evaluation includes both importance and research effort ratings
+4. The status is set according to the decision matrix above
+
+**Option B - No entities to evaluate:**
+1. `LOOP_{{LOOP_NUMBER}}_ENTITIES.md` contains no entities, OR
+2. All entities have already been evaluated in `LOOP_{{LOOP_NUMBER}}_PLAN.md`
+3. Mark this task complete without making changes
+
+This graceful handling of empty states prevents the pipeline from stalling when discovery yields no entities.
