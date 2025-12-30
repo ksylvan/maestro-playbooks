@@ -14,24 +14,25 @@ This document is the **progress gate** for the refactoring pipeline. It checks w
 ## Instructions
 
 1. **Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`** to check for remaining work
-2. **Check if there are any `PENDING` items** with LOW risk AND HIGH/VERY HIGH benefit (not `IMPLEMENTED`, not `WON'T DO`, not `PENDING - MANUAL REVIEW`)
-3. **If auto-implementable PENDING items exist**: Reset all tasks in documents 1-4 to continue the loop
-4. **If NO auto-implementable PENDING items exist**: Do NOT reset - pipeline exits
+2. **Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_CANDIDATES.md`** to check tactic exhaustion status
+3. **Check if there are any `PENDING` items** with LOW risk AND HIGH/VERY HIGH benefit (not `IMPLEMENTED`, not `WON'T DO`, not `PENDING - MANUAL REVIEW`)
+4. **If auto-implementable PENDING items exist OR tactics remain**: Reset all tasks in documents 1-4 to continue the loop
+5. **If NO auto-implementable PENDING items AND all tactics exhausted**: Do NOT reset - pipeline exits
 
 ## Progress Check
 
-- [ ] **Check for remaining work**: Read LOOP_{{LOOP_NUMBER}}_PLAN.md and check if there are any items with status exactly `PENDING` that have LOW risk AND HIGH or VERY HIGH benefit. If such items exist, reset documents 1-4 to continue the loop. If no auto-implementable items remain, do NOT reset anything - allow the pipeline to exit.
+- [ ] **Check for remaining work**: Read LOOP_{{LOOP_NUMBER}}_PLAN.md and LOOP_{{LOOP_NUMBER}}_CANDIDATES.md. The loop should CONTINUE (reset docs 1-4) if EITHER: (1) there are items with status exactly `PENDING` that have LOW risk AND HIGH/VERY HIGH benefit, OR (2) CANDIDATES.md does NOT contain `## ALL_TACTICS_EXHAUSTED`. The loop should EXIT (do NOT reset) only when BOTH conditions are false: no auto-implementable PENDING items AND all tactics are exhausted.
 
-## Reset Tasks (Only if auto-implementable PENDING items exist)
+## Reset Tasks (Only if work remains)
 
-If the progress check above determines we need to continue, reset all tasks in the following documents:
+If the progress check above determines we need to continue (auto-implementable PENDING items OR tactics remaining), reset all tasks in the following documents:
 
 - [ ] **Reset 1_ANALYZE.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/1_ANALYZE.md`
 - [ ] **Reset 2_FIND_ISSUES.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/2_FIND_ISSUES.md`
 - [ ] **Reset 3_EVALUATE.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/3_EVALUATE.md`
 - [ ] **Reset 4_IMPLEMENT.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/4_IMPLEMENT.md`
 
-**IMPORTANT**: Only reset documents 1-4 if there are PENDING items with LOW risk and HIGH/VERY HIGH benefit. If all such items are IMPLEMENTED, or only MEDIUM/HIGH risk items remain, leave these reset tasks unchecked to allow the pipeline to exit.
+**IMPORTANT**: Only reset documents 1-4 if there is work remaining (auto-implementable PENDING items OR unexplored tactics). If all tactics are exhausted AND all items are IMPLEMENTED, WON'T DO, or PENDING - MANUAL REVIEW, leave these reset tasks unchecked to allow the pipeline to exit.
 
 ## Decision Logic
 
@@ -39,12 +40,19 @@ If the progress check above determines we need to continue, reset all tasks in t
 IF LOOP_{{LOOP_NUMBER}}_PLAN.md doesn't exist:
     → Do NOT reset anything (PIPELINE JUST STARTED - LET IT RUN)
 
-ELSE IF no items with status `PENDING` AND risk=LOW AND benefit=HIGH/VERY HIGH:
-    → Do NOT reset anything (ALL AUTOMATABLE WORK DONE - EXIT)
+ELSE IF items with status exactly `PENDING` exist with LOW risk AND HIGH/VERY HIGH benefit:
+    → Reset documents 1-4 (CONTINUE TO IMPLEMENT PENDING ITEMS)
+
+ELSE IF LOOP_{{LOOP_NUMBER}}_CANDIDATES.md does NOT contain "ALL_TACTICS_EXHAUSTED":
+    → Reset documents 1-4 (CONTINUE TO DISCOVER MORE CANDIDATES)
 
 ELSE:
-    → Reset documents 1-4 (CONTINUE TO NEXT LOOP)
+    → Do NOT reset anything (ALL TACTICS EXHAUSTED AND NO AUTO-IMPLEMENTABLE ITEMS - EXIT)
 ```
+
+**Key insight:** The loop should continue if EITHER:
+1. There are PENDING items with LOW risk AND HIGH/VERY HIGH benefit to implement, OR
+2. There are still tactics to execute (no `ALL_TACTICS_EXHAUSTED` marker)
 
 ## How This Works
 
@@ -54,22 +62,22 @@ This document controls loop continuation through resets:
 
 ### Exit Conditions (Do NOT Reset)
 
-1. **No Plan File**: `LOOP_{{LOOP_NUMBER}}_PLAN.md` doesn't exist (nothing found)
-2. **All Implemented**: All LOW risk + HIGH benefit items are `IMPLEMENTED`
-3. **All Skipped**: All items are `WON'T DO`
-4. **Only Manual Items**: All remaining items are `PENDING - MANUAL REVIEW`
-5. **Only Risky Items**: All remaining `PENDING` items have MEDIUM or HIGH risk
-6. **Only Low Value Items**: All remaining `PENDING` items have LOW or MEDIUM benefit
-7. **Max Loops**: Hit the loop limit in Batch Runner
+Exit when ALL of these are true:
+1. **Tactics exhausted**: `LOOP_{{LOOP_NUMBER}}_CANDIDATES.md` contains `## ALL_TACTICS_EXHAUSTED`
+2. **No auto-implementable PENDING items**: All LOW risk + HIGH/VERY HIGH benefit items are `IMPLEMENTED`, `WON'T DO`, or `PENDING - MANUAL REVIEW`
+
+Also exit if:
+3. **Max Loops**: Hit the loop limit in Batch Runner
 
 ### Continue Conditions (Reset Documents 1-4)
 
-1. There are `PENDING` items with LOW risk AND HIGH/VERY HIGH benefit
-2. We haven't hit max loops
+Continue if EITHER is true:
+1. There are items with status exactly `PENDING` that have LOW risk AND HIGH/VERY HIGH benefit in LOOP_{{LOOP_NUMBER}}_PLAN.md
+2. `LOOP_{{LOOP_NUMBER}}_CANDIDATES.md` does NOT contain `## ALL_TACTICS_EXHAUSTED` (more tactics to run)
 
 ## Current Status
 
-Before making a decision, check the plan file:
+Before making a decision, check both files:
 
 | Metric | Value |
 |--------|-------|
@@ -78,16 +86,17 @@ Before making a decision, check the plan file:
 | **IMPLEMENTED** | ___ |
 | **WON'T DO** | ___ |
 | **PENDING - MANUAL REVIEW** | ___ |
+| **ALL_TACTICS_EXHAUSTED present?** | ___ |
 
 ## Progress History
 
 Track progress across loops:
 
-| Loop | Refactors Implemented | Items Remaining | Decision |
-|------|----------------------|-----------------|----------|
-| 1 | ___ | ___ | [CONTINUE / EXIT] |
-| 2 | ___ | ___ | [CONTINUE / EXIT] |
-| ... | ... | ... | ... |
+| Loop | Refactors Implemented | Items Remaining | Tactics Exhausted? | Decision |
+|------|----------------------|-----------------|-------------------|----------|
+| 1 | ___ | ___ | ___ | [CONTINUE / EXIT] |
+| 2 | ___ | ___ | ___ | [CONTINUE / EXIT] |
+| ... | ... | ... | ... | ... |
 
 ## Manual Override
 
