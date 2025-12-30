@@ -20,18 +20,18 @@ This document is the **security gate** for the audit pipeline. It checks whether
 
 ## Security Gate Check
 
-- [ ] **Check for remaining vulnerabilities**: Read LOOP_{{LOOP_NUMBER}}_PLAN.md and check if there are any items with status `PENDING` that have CRITICAL or HIGH severity AND EASY or MEDIUM remediability. If such items exist, reset documents 1-4 to continue the loop. If no auto-remediable CRITICAL/HIGH items remain, do NOT reset anything - allow the pipeline to exit.
+- [ ] **Check for remaining vulnerabilities**: Read LOOP_{{LOOP_NUMBER}}_PLAN.md and LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md. The loop should CONTINUE (reset docs 1-4) if EITHER: (1) there are items with status `PENDING` that have CRITICAL or HIGH severity AND EASY or MEDIUM remediability, OR (2) VULNERABILITIES.md does NOT contain `## ALL_TACTICS_EXHAUSTED`. The loop should EXIT (do NOT reset) only when BOTH conditions are false: no PENDING CRITICAL/HIGH items with EASY/MEDIUM remediability AND all tactics are exhausted.
 
-## Reset Tasks (Only if PENDING CRITICAL/HIGH items with EASY/MEDIUM remediability exist)
+## Reset Tasks (Only if work remains)
 
-If the security gate check above determines we need to continue, reset all tasks in the following documents:
+If the security gate check above determines we need to continue (PENDING CRITICAL/HIGH items with EASY/MEDIUM remediability OR tactics remaining), reset all tasks in the following documents:
 
 - [ ] **Reset 1_ANALYZE.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/1_ANALYZE.md`
 - [ ] **Reset 2_FIND_ISSUES.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/2_FIND_ISSUES.md`
 - [ ] **Reset 3_EVALUATE.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/3_EVALUATE.md`
 - [ ] **Reset 4_IMPLEMENT.md**: Uncheck all tasks in `{{AUTORUN_FOLDER}}/4_IMPLEMENT.md`
 
-**IMPORTANT**: Only reset documents 1-4 if there are PENDING items with CRITICAL/HIGH severity and EASY/MEDIUM remediability. If all such items are IMPLEMENTED, or only HARD remediability items remain, leave these reset tasks unchecked to allow the pipeline to exit.
+**IMPORTANT**: Only reset documents 1-4 if there is work remaining (PENDING CRITICAL/HIGH items with EASY/MEDIUM remediability OR unexplored tactics). If all tactics are exhausted AND all such items are IMPLEMENTED, WON'T DO, or PENDING - MANUAL REVIEW, leave these reset tasks unchecked to allow the pipeline to exit.
 
 ## Decision Logic
 
@@ -39,12 +39,19 @@ If the security gate check above determines we need to continue, reset all tasks
 IF LOOP_{{LOOP_NUMBER}}_PLAN.md doesn't exist:
     → Do NOT reset anything (PIPELINE JUST STARTED - LET IT RUN)
 
-ELSE IF no PENDING items with (CRITICAL|HIGH severity) AND (EASY|MEDIUM remediability):
-    → Do NOT reset anything (ALL CRITICAL/HIGH FIXED - EXIT)
+ELSE IF items with status `PENDING` AND (CRITICAL|HIGH severity) AND (EASY|MEDIUM remediability) exist:
+    → Reset documents 1-4 (CONTINUE TO IMPLEMENT PENDING ITEMS)
+
+ELSE IF LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md does NOT contain "ALL_TACTICS_EXHAUSTED":
+    → Reset documents 1-4 (CONTINUE TO DISCOVER MORE VULNERABILITIES)
 
 ELSE:
-    → Reset documents 1-4 (CONTINUE TO NEXT LOOP)
+    → Do NOT reset anything (ALL TACTICS EXHAUSTED AND NO PENDING CRITICAL/HIGH - EXIT)
 ```
+
+**Key insight:** The loop should continue if EITHER:
+1. There are PENDING CRITICAL/HIGH items with EASY/MEDIUM remediability to implement, OR
+2. There are still tactics to execute (no `ALL_TACTICS_EXHAUSTED` marker)
 
 ## How This Works
 
@@ -54,21 +61,22 @@ This document controls loop continuation through resets:
 
 ### Exit Conditions (Do NOT Reset)
 
-1. **All Clear**: No CRITICAL or HIGH severity findings remain
-2. **All Fixed**: All CRITICAL/HIGH items are `IMPLEMENTED`
-3. **Only Hard Items**: Remaining CRITICAL/HIGH need `MANUAL REVIEW` (HARD remediability)
-4. **Only Low Severity**: Remaining items are MEDIUM/LOW/INFO
-5. **Max Loops**: Hit the loop limit in Batch Runner
+Exit when ALL of these are true:
+1. **Tactics exhausted**: `LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md` contains `## ALL_TACTICS_EXHAUSTED`
+2. **No PENDING CRITICAL/HIGH**: All CRITICAL/HIGH items with EASY/MEDIUM remediability are `IMPLEMENTED`, `WON'T DO`, or `PENDING - MANUAL REVIEW`
+
+Also exit if:
+3. **Max Loops**: Hit the loop limit in Batch Runner
 
 ### Continue Conditions (Reset Documents 1-4)
 
-1. There are PENDING items with CRITICAL or HIGH severity
-2. Those items have EASY or MEDIUM remediability
-3. We haven't hit max loops
+Continue if EITHER is true:
+1. There are items with status exactly `PENDING` that have CRITICAL/HIGH severity AND EASY/MEDIUM remediability
+2. `LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md` does NOT contain `## ALL_TACTICS_EXHAUSTED` (more tactics to run)
 
 ## Current Status
 
-Before making a decision, tally the current state:
+Before making a decision, check the plan and vulnerabilities files:
 
 | Category | Count |
 |----------|-------|
@@ -78,6 +86,7 @@ Before making a decision, tally the current state:
 | **HIGH - IMPLEMENTED** | ___ |
 | **MANUAL REVIEW (HARD)** | ___ |
 | **WON'T DO / FALSE POSITIVE** | ___ |
+| **Tactics Exhausted?** | YES / NO |
 
 ## Security Posture History
 
