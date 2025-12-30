@@ -21,7 +21,7 @@ Evaluate each test gap from the discovery phase and assign importance and testab
 
 ## Evaluation Checklist
 
-- [ ] **Evaluate gaps**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_GAPS.md`, rate each gap by IMPORTANCE (CRITICAL/HIGH/MEDIUM/LOW) and TESTABILITY (EASY/MEDIUM/HARD/VERY HARD). Mark EASY+HIGH or better as PENDING for auto-implementation. Output to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`.
+- [ ] **Evaluate gaps (or skip if empty)**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_GAPS.md`. If it contains no gaps OR all gaps have already been evaluated in `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`, mark this task complete without changes. Otherwise, rate each gap by IMPORTANCE (CRITICAL/HIGH/MEDIUM/LOW) and TESTABILITY (EASY/MEDIUM/HARD/VERY HARD). Mark EASY+HIGH or better as PENDING for auto-implementation. Output to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`.
 
 ## Rating Criteria
 
@@ -147,3 +147,20 @@ Tests that share setup or mocking infrastructure:
 - **Balance risk and reward**: CRITICAL importance trumps easy testability
 - **Be realistic about VERY HARD**: Some code needs refactoring before testing
 - **Track estimates**: We need to know when we'll hit 80%
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Evaluated gaps:**
+1. You've read all gaps from `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_GAPS.md`
+2. You've rated each gap for IMPORTANCE and TESTABILITY
+3. You've assigned appropriate status (PENDING, MANUAL REVIEW, or WON'T DO) to each
+4. You've output the prioritized plan to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`
+
+**Option B - No gaps to evaluate:**
+1. `LOOP_{{LOOP_NUMBER}}_GAPS.md` contains no gaps, OR
+2. All gaps have already been evaluated in `LOOP_{{LOOP_NUMBER}}_PLAN.md`
+3. Mark this task complete without making changes
+
+This graceful handling of empty states prevents the pipeline from stalling when there are no gaps to evaluate.
