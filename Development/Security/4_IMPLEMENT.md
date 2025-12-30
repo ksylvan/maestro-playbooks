@@ -20,9 +20,18 @@ Implement fixes for `PENDING` security vulnerabilities from the evaluation phase
 5. **Update status** to `IMPLEMENTED` in the plan file
 6. **Log changes** to `{{AUTORUN_FOLDER}}/SECURITY_LOG_{{AGENT_NAME}}_{{DATE}}.md`
 
+## Task
+
+- [ ] **Fix one vulnerability (or skip if none)**: Read {{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md. If the file doesn't exist OR contains no items with status exactly `PENDING` that have CRITICAL/HIGH severity AND EASY/MEDIUM remediability, mark this task complete without changes. Otherwise, find ONE such item, implement the fix following secure coding practices, verify the fix, log to {{AUTORUN_FOLDER}}/SECURITY_LOG_{{AGENT_NAME}}_{{DATE}}.md, and update status to `IMPLEMENTED` in the plan file.
+
 ## Implementation Checklist
 
-- [ ] **Fix vulnerability**: Read LOOP_{{LOOP_NUMBER}}_PLAN.md, implement the fix for ONE `PENDING` item with CRITICAL or HIGH severity and EASY or MEDIUM remediability. Follow secure coding practices. Verify the fix. Update status to `IMPLEMENTED` in the plan. Log to SECURITY_LOG. Only fix ONE vulnerability per task.
+Before implementing, verify:
+- [ ] The status is exactly `PENDING` (not `PENDING - MANUAL REVIEW` or `WON'T DO`)
+- [ ] The severity is CRITICAL or HIGH
+- [ ] The remediability is EASY or MEDIUM
+- [ ] The fix strategy is clearly specified
+- [ ] No other changes are required (no dependencies)
 
 ## Remediation Patterns
 
@@ -148,3 +157,44 @@ If a vulnerable dependency has no fix:
 - **Rotate secrets immediately**: Don't wait for the fix to merge
 - **Keep the log detailed**: Audit trail is important
 - **When in doubt, ask**: Mark for manual review
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Implemented a fix:**
+1. You've implemented exactly ONE fix from `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`
+2. You've appended the change details to `{{AUTORUN_FOLDER}}/SECURITY_LOG_{{AGENT_NAME}}_{{DATE}}.md`
+3. You've updated the item status in `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md` to `IMPLEMENTED`
+
+**Option B - No PENDING fixes available:**
+1. `LOOP_{{LOOP_NUMBER}}_PLAN.md` doesn't exist, OR
+2. It contains no items with status exactly `PENDING` that have CRITICAL/HIGH severity AND EASY/MEDIUM remediability
+3. Mark this task complete without making changes
+
+This graceful handling allows the pipeline to continue when a loop iteration produces no actionable fixes.
+
+## When No Fixes Are Available
+
+If there are no qualifying `PENDING` items in the plan file, append to `{{AUTORUN_FOLDER}}/SECURITY_LOG_{{AGENT_NAME}}_{{DATE}}.md`:
+
+```markdown
+---
+
+## [YYYY-MM-DD HH:MM] - Loop {{LOOP_NUMBER}} Complete
+
+**Agent:** {{AGENT_NAME}}
+**Project:** {{AGENT_PATH}}
+**Loop:** {{LOOP_NUMBER}}
+**Status:** No PENDING fixes available (CRITICAL/HIGH severity with EASY/MEDIUM remediability)
+
+**Summary:**
+- Items IMPLEMENTED: [count]
+- Items WON'T DO: [count]
+- Items PENDING - MANUAL REVIEW: [count]
+- Items PENDING (LOW severity or HARD remediability): [count]
+
+**Recommendation:** [Either "All automatable security fixes implemented" or "Remaining items need manual review or have lower priority"]
+```
+
+This signals to the pipeline that this loop iteration is complete.
