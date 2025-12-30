@@ -20,7 +20,7 @@ Evaluate each security finding from the discovery phase and assign severity and 
 
 ## Evaluation Checklist
 
-- [ ] **Evaluate findings**: Read LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md, rate each finding by SEVERITY (CRITICAL/HIGH/MEDIUM/LOW) and REMEDIABILITY (EASY/MEDIUM/HARD). Mark CRITICAL or HIGH severity with EASY/MEDIUM remediation as PENDING for auto-fix. Output to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`.
+- [ ] **Evaluate one finding (or skip if empty)**: Read {{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md. If it contains no findings OR all findings have already been evaluated in LOOP_{{LOOP_NUMBER}}_PLAN.md, mark this task complete without changes. Otherwise, pick one unevaluated finding, rate by SEVERITY (CRITICAL/HIGH/MEDIUM/LOW) and REMEDIABILITY (EASY/MEDIUM/HARD), mark CRITICAL or HIGH severity with EASY/MEDIUM remediation as PENDING for auto-fix, and append to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`.
 
 ## Rating Criteria
 
@@ -150,8 +150,26 @@ Fixes that should be done together:
 
 ## Guidelines
 
+- **One finding per run**: Only evaluate ONE finding, then stop. This allows incremental progress.
 - **Fix CRITICAL first**: These are actively dangerous
 - **Verify before closing**: Re-test after each fix
 - **Document accepted risks**: If skipping, explain why
 - **Group related fixes**: Some vulnerabilities share root causes
 - **Consider dependencies**: Some fixes enable or require others
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Evaluated a finding:**
+1. You've evaluated exactly ONE finding from `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md`
+2. You've appended a complete evaluation to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`
+3. The evaluation includes both severity and remediability ratings
+4. The status is set according to the auto-remediation criteria above
+
+**Option B - No findings to evaluate:**
+1. `LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md` contains no findings, OR
+2. All findings have already been evaluated in `LOOP_{{LOOP_NUMBER}}_PLAN.md`
+3. Mark this task complete without making changes
+
+This graceful handling of empty states prevents the pipeline from stalling when a tactic yields no vulnerabilities.
