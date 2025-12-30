@@ -20,7 +20,7 @@ Using the attack surface map, systematically search for specific security vulner
 
 ## Discovery Checklist
 
-- [ ] **Find vulnerabilities**: Using the attack surface map and tactics, search for injection flaws, hardcoded secrets, auth issues, XSS, and insecure dependencies. Document each finding with file path, line number, vulnerability type, and evidence. Output to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md`.
+- [ ] **Execute one vulnerability search (or mark exhausted)**: Read `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ATTACK_SURFACE.md` and `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md` (if it exists) to see which vulnerability categories have been searched. If ALL categories below are already marked `[SEARCHED]`, append `## ALL_TACTICS_EXHAUSTED` to the vulnerabilities file and mark this task complete. Otherwise, pick ONE unsearched category from: Injection Flaws, Hardcoded Secrets, Authentication Issues, XSS, Insecure Cryptography, Access Control Issues, or Dependency Vulnerabilities. Search the codebase for that category, append findings to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md`, and mark the category as `[SEARCHED]` in the vulnerabilities file.
 
 ## Vulnerability Search Patterns
 
@@ -146,8 +146,25 @@ Findings that may not be actual vulnerabilities:
 
 ## Guidelines
 
+- **One category per run**: Only execute ONE vulnerability category search, then stop. This allows the pipeline to iterate.
 - **Search systematically**: Use the patterns above as starting points
 - **Verify findings**: Confirm vulnerabilities are actually exploitable
 - **Note context**: Some patterns are safe in certain contexts
 - **Check dependencies**: Don't forget third-party vulnerabilities
 - **Document evidence**: Include actual code snippets
+- **Mark as searched**: Update `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md` to show which categories have been searched (add `[SEARCHED]` suffix to category header)
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Executed a search:**
+1. You've searched exactly ONE vulnerability category from the list
+2. You've appended all findings to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md`
+3. You've marked the category as `[SEARCHED]` in the vulnerabilities file
+
+**Option B - All tactics exhausted:**
+1. All vulnerability categories are already marked as `[SEARCHED]`
+2. You've appended `## ALL_TACTICS_EXHAUSTED` to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_VULNERABILITIES.md`
+
+The `ALL_TACTICS_EXHAUSTED` marker signals to downstream documents that discovery is complete.
