@@ -142,6 +142,7 @@ These variables are substituted by Maestro at runtime:
 ### Adjusting Aggressiveness
 
 Edit `4_IMPLEMENT.md` in any playbook to change which items get auto-processed:
+
 - Default: LOW complexity/risk + HIGH gain/benefit only
 - More aggressive: Include MEDIUM complexity
 - Conservative: Require VERY HIGH gain
@@ -155,6 +156,7 @@ Edit `1_ANALYZE.md` to add domain-specific investigation patterns.
 See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide to creating and submitting playbooks to the exchange.
 
 Quick overview:
+
 1. Create a folder in `Category/Subcategory/` format
 2. Add README.md and documents 1-5 (optionally 0)
 3. Add your entry to `manifest.json`
