@@ -91,6 +91,35 @@ Each playbook follows a 5-document chain pattern (with optional initialization):
 - **Development playbooks**: Use Maestro's default agent prompt
 - **Research playbooks**: Require custom `Agent-Prompt.md` with user configuration (see playbook README)
 
+### Assets Folder Convention
+
+Playbooks can include non-markdown assets (config files, YAML, Dockerfiles, templates, etc.) in an `assets/` subfolder:
+
+```
+Category/
+└── YourPlaybook/
+    ├── README.md
+    ├── 1_ANALYZE.md
+    ├── ...
+    └── assets/           # Optional: bundled configuration files
+        ├── config.yaml
+        ├── Dockerfile
+        └── template.json
+```
+
+When installing playbooks from the exchange, Maestro copies the entire playbook folder—including the `assets/` subfolder. Reference assets in your playbook documents using the `{{AUTORUN_FOLDER}}/assets/` path:
+
+```markdown
+- [ ] Read the config template from `{{AUTORUN_FOLDER}}/assets/config.yaml`
+```
+
+Use cases for assets:
+- **Configuration templates**: Pre-configured YAML, JSON, or TOML files
+- **Docker/container files**: Dockerfiles, docker-compose.yml
+- **Scripts**: Helper shell scripts, Python utilities
+- **Schema definitions**: OpenAPI specs, JSON schemas
+- **Reference data**: Lookup tables, mapping files
+
 ## Status Values
 
 Items in `LOOP_N_PLAN.md` use these statuses:
