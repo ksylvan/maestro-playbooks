@@ -14,10 +14,12 @@ Code improvement workflows that work with Maestro's **default agent prompt**.
 
 | Playbook | Purpose | Exit Condition |
 |----------|---------|----------------|
-| `Development/Performance/` | Find and fix performance issues | No PENDING items remain |
-| `Development/Security/` | Audit and remediate vulnerabilities | No CRITICAL/HIGH severity issues |
-| `Development/Refactor/` | Simplify code, eliminate duplication | No LOW risk + HIGH benefit items |
+| `Development/Best-PR/` | Compare two competing PRs, pick winner, extract gems | All 5 documents completed (no loop) |
 | `Development/Documentation/` | Achieve 90% doc coverage | Coverage >=90% or no HIGH importance gaps |
+| `Development/Mobile-Polish/` | Make React sites mobile-friendly | No PENDING items remain |
+| `Development/Performance/` | Find and fix performance issues | No PENDING items remain |
+| `Development/Refactor/` | Simplify code, eliminate duplication | No LOW risk + HIGH benefit items |
+| `Development/Security/` | Audit and remediate vulnerabilities | No CRITICAL/HIGH severity issues |
 | `Development/Testing/` | Achieve 80% test coverage | Coverage >=80% or no auto-testable work |
 | `Development/Usage/` | Update README to match actual features | No CRITICAL/HIGH importance gaps |
 

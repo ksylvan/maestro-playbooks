@@ -177,6 +177,33 @@
       "loopEnabled": true,
       "maxLoops": 10,
       "prompt": null
+    },
+    {
+      "id": "development-best-pr",
+      "title": "Best PR Comparison",
+      "description": "Objectively compares two competing PRs implementing the same feature using weighted criteria, determines a winner, and extracts valuable insights from the runner-up.",
+      "category": "Development",
+      "subcategory": "Review",
+      "author": "Kayvan Sylvan",
+      "authorLink": "https://www.sylvan.com",
+      "tags": [
+        "pr-comparison",
+        "code-review",
+        "decision-making",
+        "weighted-scoring"
+      ],
+      "lastUpdated": "2026-01-09",
+      "path": "Best-PR",
+      "documents": [
+        { "filename": "1_ESTABLISH_CONTEXT", "resetOnCompletion": false },
+        { "filename": "2_EVALUATE_PR_A", "resetOnCompletion": false },
+        { "filename": "3_EVALUATE_PR_B", "resetOnCompletion": false },
+        { "filename": "4_COMPARE", "resetOnCompletion": false },
+        { "filename": "5_SYNTHESIZE", "resetOnCompletion": false }
+      ],
+      "loopEnabled": false,
+      "maxLoops": null,
+      "prompt": null
     }
   ]
 }
