@@ -1,5 +1,8 @@
 {
 	"files.associations": {
 		"LICENSE": "plaintext"
+	},
+	"[json]": {
+		"editor.formatOnSave": false
 	}
 }
